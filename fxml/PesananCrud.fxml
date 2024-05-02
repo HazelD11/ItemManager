@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<GridPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PesananCrudController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" />
+    <ColumnConstraints hgrow="SOMETIMES" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" />
+      <ColumnConstraints hgrow="SOMETIMES" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints vgrow="SOMETIMES" />
+    <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints vgrow="SOMETIMES" />
+    <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" text="ITEM MANAGER" textAlignment="CENTER">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <GridPane.margin>
+            <Insets left="40.0" />
+         </GridPane.margin>
+      </Label>
+      <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="54.0" prefWidth="853.0" text="Hello, Admin" textAlignment="CENTER" GridPane.columnIndex="1">
+         <font>
+            <Font size="24.0" />
+         </font>
+         <GridPane.margin>
+            <Insets right="10.0" />
+         </GridPane.margin>
+      </Label>
+      <VBox prefHeight="455.0" prefWidth="259.0" GridPane.rowIndex="4">
+         <children>
+            <Button fx:id="DashboardBtn" mnemonicParsing="false" onAction="#switchToDashboard" prefHeight="100.0" prefWidth="320.0" text="DASHBOARD">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="DatabaseBtn" mnemonicParsing="false" onAction="#switchToDatabase" prefHeight="100.0" prefWidth="320.0" text="DATABASE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="PesananBtn" mnemonicParsing="false" onAction="#switchToPesanan" prefHeight="100.0" prefWidth="320.0" text="PESANAN" textFill="#006fff">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="KeluarBtn" mnemonicParsing="false" onAction="#logout" prefHeight="100.0" prefWidth="320.0" text="KELUAR">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets top="300.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+      </VBox>
+      <VBox prefHeight="662.0" prefWidth="622.0" spacing="20.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+         <GridPane.margin>
+            <Insets left="50.0" top="30.0" />
+         </GridPane.margin>
+         <children>
+            <TextField fx:id="Id" promptText="ID" />
+            <TextField fx:id="IdFaktur" promptText="ID FAKTUR" />
+            <TextField fx:id="Nama" promptText="NAMA ITEM" />
+            <TextField fx:id="Jumlah" promptText="JUMLAH" />
+            <TextField fx:id="Pembeli" promptText="PEMBELI" />
+            <TextField fx:id="Penjual" promptText="PENJUAL">
+               <opaqueInsets>
+                  <Insets right="10.0" />
+               </opaqueInsets>
+            </TextField>
+            <DatePicker fx:id="Tanggal" accessibleRole="TEXT_FIELD" promptText="TANGGAL" />
+            <TextArea fx:id="Alamat" prefHeight="200.0" prefWidth="200.0" promptText="ALAMAT" />
+            <MenuButton fx:id="Tipe" mnemonicParsing="false" prefHeight="26.0" prefWidth="181.0" text="Tipe">
+              <items>
+                <MenuItem mnemonicParsing="false" text="MASUK" />
+                <MenuItem mnemonicParsing="false" text="KELUAR" />
+              </items>
+            </MenuButton>
+            <Button fx:id="Tambah" lineSpacing="20.0" mnemonicParsing="false" onAction="#create" prefHeight="57.0" prefWidth="140.0" text="TAMBAH" />
+         </children>
+         <opaqueInsets>
+            <Insets right="10.0" />
+         </opaqueInsets>
+      </VBox>
+   </children>
+</GridPane>
