@@ -1,6 +1,5 @@
 package data;
 
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Admin {
@@ -16,12 +15,9 @@ public class Admin {
         this.Password = Password;
     }
 
-    public static ObservableList<Admin> acc() {
-        return FXCollections.observableArrayList(
-                new Admin(1, "admin", "mimin1","admin"),
-                new Admin(2, "mimin", "mimin2","pass")
-        );
-    }
+    // Hapus metode acc()
+
+    // Getter dan setter
 
     public int getId() {
         return Id;
@@ -54,6 +50,4 @@ public class Admin {
     public void setPassword(String password) {
         Password = password;
     }
-
-
 }
