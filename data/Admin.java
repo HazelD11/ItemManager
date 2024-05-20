@@ -1,7 +1,5 @@
 package data;
 
-import javafx.collections.ObservableList;
-
 public class Admin {
     private int Id;
     private String Username;
