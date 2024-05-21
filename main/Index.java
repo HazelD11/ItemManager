@@ -19,7 +19,7 @@ public class Index extends Application{
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         try {
-            ObservableList<Admin> admins = AdminDAO.getAdminsFromDatabase();
+            ObservableList<Admin> admin = AdminDAO.getAdminsFromDatabase();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Login.fxml"));
             Parent root = loader.load();
             GridPane grid = new GridPane();

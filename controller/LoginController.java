@@ -26,11 +26,11 @@ public class LoginController {
     @FXML
     private TextField fxUser;
 
-    private ObservableList<Admin> admins; // Tambahkan atribut untuk menyimpan data admin
+    private ObservableList<Admin> admin; // Tambahkan atribut untuk menyimpan data admin
 
     public void initialize() {
         // Ambil data admin dari database saat controller diinisialisasi
-        admins = AdminDAO.getAdminsFromDatabase();
+        admin = AdminDAO.getAdminsFromDatabase();
     }
 
     public void login() {
@@ -39,7 +39,7 @@ public class LoginController {
 
         // Check if any admin's credentials match
         boolean loggedIn = false;
-        for (Admin adminData : admins) {
+        for (Admin adminData : admin) {
             if (Username.equals(adminData.getUsername()) && Password.equals(adminData.getPassword())) {
                 loggedIn = true;
                 break;
