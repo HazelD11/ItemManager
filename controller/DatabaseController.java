@@ -51,6 +51,11 @@ public class DatabaseController {
     }
 
     @FXML
+    void switchToOrder(ActionEvent event) throws IOException {
+        switchScene("Order.fxml", event);
+    }
+
+    @FXML
     void logout(ActionEvent event) throws IOException {
         switchScene("login.fxml", event);
     }

@@ -35,6 +35,9 @@ public class DashboardController {
     private Button PesananBtn;
 
     @FXML
+    private Button OrderBtn;
+
+    @FXML
     private Button KeluarBtn;
     
     @FXML
@@ -50,6 +53,11 @@ public class DashboardController {
     @FXML
     void switchToPesanan(ActionEvent event) throws IOException {
         switchScene("PesananView.fxml", event);
+    }
+
+    @FXML
+    void switchToOrder(ActionEvent event) throws IOException {
+        switchScene("Order.fxml", event);
     }
 
     @FXML
