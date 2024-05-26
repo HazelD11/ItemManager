@@ -96,9 +96,9 @@
             <TextField fx:id="Jumlah" promptText="JUMLAH" />
             <TextField fx:id="Pembeli" promptText="PEMBELI" />
             <TextField fx:id="Penjual" promptText="PENJUAL">
-               <opaqueInsets>
+               <Q>
                   <Insets right="10.0" />
-               </opaqueInsets>
+               </Q>
             </TextField>
             <DatePicker fx:id="Tanggal" accessibleRole="TEXT_FIELD" promptText="TANGGAL" />
             <TextArea fx:id="Alamat" prefHeight="200.0" prefWidth="200.0" promptText="ALAMAT" />

@@ -90,8 +90,9 @@
                <children>
                   <MenuButton fx:id="FilterBtn" mnemonicParsing="false" text="Filter">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Masuk" />
-                        <MenuItem mnemonicParsing="false" text="Keluar" />
+                        <MenuItem mnemonicParsing="false" text="Pending" />
+                        <MenuItem mnemonicParsing="false" text="Approved" />
+                        <MenuItem mnemonicParsing="false" text="Disapproved" />
                         <MenuItem mnemonicParsing="false" text="Semua" />
                      </items>
                      <font>

@@ -68,6 +68,11 @@
                   <Font size="24.0" />
                </font>
             </Button>
+            <Button fx:id="OrderBtn" mnemonicParsing="false" onAction="#switchToOrder" prefHeight="100.0" prefWidth="320.0" text="ORDER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
             <Button fx:id="KeluarBtn" mnemonicParsing="false" onAction="#logout" prefHeight="100.0" prefWidth="320.0" text="KELUAR">
                <font>
                   <Font size="24.0" />
