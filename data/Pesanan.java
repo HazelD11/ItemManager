@@ -1,44 +1,44 @@
+
 package data;
 
 import java.sql.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class Transaksi {
+public class Pesanan {
     int id;
-    String admin, nama, toko, alamat, metodePembayaran, status, tipe, nomorReferensi, tanggal;
+    int idPemasok; // Add this field to hold the id of the Pemasok
+    String admin, nama, alamat, metodePembayaran, status, tipe, tanggal;
 
-    public Transaksi(int id, String admin, String nama, String toko, String alamat, String metodePembayaran, String status, String tipe, String nomorReferensi,String tanggal) {
-                        this.id = id;
-                        this.admin = admin;
-                        this.nama = nama;
-                        this.toko = toko;
-                        this.alamat = alamat;
-                        this.metodePembayaran = metodePembayaran;
-                        this.status = status;
-                        this.tipe = tipe;
-                        this.nomorReferensi = nomorReferensi;
-                        this.tanggal = tanggal;
+    public Pesanan(int id, int idPemasok, String admin, String nama, String alamat, String metodePembayaran, String status, String tipe, String tanggal) {
+        this.id = id;
+        this.idPemasok = idPemasok;
+        this.admin = admin;
+        this.nama = nama;
+        this.alamat = alamat;
+        this.metodePembayaran = metodePembayaran;
+        this.status = status;
+        this.tipe = tipe;
+        this.tanggal = tanggal;
     }
 
     @Override
     public String toString() {
-        return "Transaksi{" +
+        return "Pesanan{" +
                 "id=" + id +
+                ", idPemasok=" + idPemasok +
                 ", admin=" + admin +
                 ", nama=" + nama +
-                ", toko=" + toko +
                 ", alamat=" + alamat +
                 ", metodePembayaran=" + metodePembayaran +
                 ", status=" + status +
                 ", tipe=" + tipe +
-                ", nomorReferensi=" + nomorReferensi +
                 ", tanggal=" + tanggal +
                 '}';
     }
 
-    public static ObservableList<Transaksi> getTransaksisFromDatabase() {
-        ObservableList<Transaksi> Transaksis = FXCollections.observableArrayList();
+    public static ObservableList<Pesanan> getPesanansFromDatabase() {
+        ObservableList<Pesanan> Pesanans = FXCollections.observableArrayList();
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -46,25 +46,27 @@ public class Transaksi {
         try {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/itemmanager", "root", "");
             statement = connection.createStatement();
-            resultSet = statement.executeQuery("SELECT t.id AS tid, t.metodePembayaran AS mtdpb, t.status AS ts,"+
-                                                " t.tipe AS tp, t.nomorReferensi AS tnr, t.tanggal AS tgl,"+
-                                                " ad.nickname AS adn, pl.nama AS pnama, pl.namaToko AS pntoko,"+
-                                                " pl.alamat AS palmt FROM transaksi t JOIN admin ad ON ad.id = t.idAdmin"+
-                                                " JOIN pelanggan pl ON pl.id = t.idPelanggan WHERE t.tipe='keluar'"+
-                                                " ORDER BY CASE WHEN status='menunggu' THEN 1 ELSE 2 END, t.id ASC");
+            resultSet = statement.executeQuery("SELECT p.id AS pid, p.idPemasok AS pidPemasok, p.metodePembayaran AS mtdpb, p.status AS ts,"+
+                                               " p.tipe AS tp, p.tanggal AS tgl, ad.nickname AS adn, pmk.nama AS pmknm,"+
+                                               " pmk.alamat AS pmkalmt FROM pesanan p "+
+                                               "JOIN admin ad ON ad.id = p.idAdmin"+
+                                               " JOIN pemasok pmk ON pmk.id = p.idPemasok "+
+                                               " ORDER BY CASE WHEN p.status='menunggu' THEN 1 "+
+                                               " WHEN p.status='sedang proses' THEN 2 "+
+                                               " WHEN p.status='berhasil' THEN 3 "+
+                                               " ELSE 4 END, p.id ASC");
 
             while (resultSet.next()) {
-                int Id = resultSet.getInt("tid");
+                int Id = resultSet.getInt("pid");
+                int idPemasok = resultSet.getInt("pidPemasok");
                 String Admin = resultSet.getString("adn");
-                String Nama = resultSet.getString("pnama");
-                String Toko = resultSet.getString("pntoko");
-                String Alamat = resultSet.getString("palmt");
+                String Nama = resultSet.getString("pmknm");
+                String Alamat = resultSet.getString("pmkalmt");
                 String MetodePembayaran = resultSet.getString("mtdpb");
                 String Status = resultSet.getString("ts");
                 String Tipe = resultSet.getString("tp");
-                String NomorReferensi = resultSet.getString("tnr");
                 String Tanggal = resultSet.getString("tgl");
-                Transaksis.add(new Transaksi(Id,Admin,Nama,Toko,Alamat,MetodePembayaran,Status,Tipe,NomorReferensi,Tanggal));
+                Pesanans.add(new Pesanan(Id, idPemasok, Admin, Nama, Alamat, MetodePembayaran, Status, Tipe, Tanggal));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -78,7 +80,7 @@ public class Transaksi {
             }
         }
 
-        return Transaksis;
+        return Pesanans;
     }
 
     public int getId() {
@@ -87,6 +89,14 @@ public class Transaksi {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getIdPemasok() {
+        return idPemasok;
+    }
+
+    public void setIdPemasok(int idPemasok) {
+        this.idPemasok = idPemasok;
     }
 
     public String getAdmin() {
@@ -103,14 +113,6 @@ public class Transaksi {
 
     public void setNama(String nama) {
         this.nama = nama;
-    }
-
-    public String getToko() {
-        return toko;
-    }
-
-    public void setToko(String toko) {
-        this.toko = toko;
     }
 
     public String getAlamat() {
@@ -145,14 +147,6 @@ public class Transaksi {
         this.tipe = tipe;
     }
 
-    public String getNomorReferensi() {
-        return nomorReferensi;
-    }
-
-    public void setNomorReferensi(String nomorReferensi) {
-        this.nomorReferensi = nomorReferensi;
-    }
-
     public String getTanggal() {
         return tanggal;
     }
@@ -160,6 +154,4 @@ public class Transaksi {
     public void setTanggal(String tanggal) {
         this.tanggal = tanggal;
     }
-
-   
 }

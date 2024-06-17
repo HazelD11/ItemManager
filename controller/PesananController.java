@@ -1,9 +1,6 @@
 package controller;
 
 import java.io.IOException;
-import java.util.List;
-
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.MenuButton;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -22,93 +19,126 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import data.Transaksi;
+import data.Pesanan;
+import data.SharedData;
 
 public class PesananController {
 
     @FXML
-    private TableColumn<Transaksi, String> AksiData;
+    private Label identitas;
 
     @FXML
-    private TableColumn<Transaksi, String> AlamatData;
+    private Button AdminBtn;
+
+    @FXML
+    private Button BarangBtn;
 
     @FXML
     private Button DashboardBtn;
 
     @FXML
-    private Button TambahData;
-
-    @FXML
-    private TableView<Transaksi> DataTable;
-
-    @FXML
-    private Button DatabaseBtn;
-
-    @FXML
-    private MenuButton FilterBtn;
-
-    @FXML
-    private TableColumn<Transaksi, Integer> IdData;
-
-    @FXML
-    private TableColumn<Transaksi, Integer> IdFakturData;
-
-    @FXML
-    private TableColumn<Transaksi, Integer> JumlahData;
-
-    @FXML
     private Button KeluarBtn;
 
     @FXML
-    private TableColumn<Transaksi, String> TanggalData;
+    private Button PelangganBtn;
 
     @FXML
-    private TableColumn<Transaksi, String> NamaData;
-
-    @FXML
-    private TableColumn<Transaksi, String> PembeliData;
-
-    @FXML
-    private TableColumn<Transaksi, String> PenjualData;
+    private Button PemasokBtn;
 
     @FXML
     private Button PesananBtn;
 
     @FXML
-    private TableColumn<Transaksi, String> TipeData;
+    private Button PesananCrudBtn;
 
     @FXML
-    void TambahDataP(ActionEvent event) throws IOException {
-        switchScene("PesananCrud.fxml", event);
-    }
+    private Button TransaksiInBtn;
 
     @FXML
-    void switchToDashboard(ActionEvent event) throws IOException {
+    private Button TransaksiOutBtn;
+
+    @FXML
+    private TableView<Pesanan> PesananTable;
+
+    @FXML
+    private TableColumn<Pesanan, Integer> Id;
+
+    @FXML
+    private TableColumn<Pesanan, String> MetodePembayaran;
+
+    @FXML
+    private TableColumn<Pesanan, String> Status;
+
+    @FXML
+    private TableColumn<Pesanan, String> Tanggal;
+
+    @FXML
+    private TableColumn<Pesanan, String> Admin;
+
+    @FXML
+    private TableColumn<Pesanan, String> Nama;
+
+    @FXML
+    private TableColumn<Pesanan, String> Alamat;
+
+    @FXML
+    private TableColumn<Pesanan, String> Tipe;
+
+    @FXML
+    private TableColumn<Pesanan, Void> Aksi;
+
+    @FXML
+    private void switchToDashboard(ActionEvent event) throws IOException {
         switchScene("Dashboard.fxml", event);
     }
 
     @FXML
-    void switchToDatabase(ActionEvent event) throws IOException {
-        switchScene("Database.fxml", event);
+    private void switchToAdmin(ActionEvent event) throws IOException {
+        switchScene("AdminView.fxml", event);
     }
-public void refreshTable(List<Transaksi> updatedList) {
-    transaksis.clear(); // Clear the existing list
-    transaksis.addAll(updatedList); // Add the updated list
-    DataTable.refresh(); // Refresh the TableView
-}
 
     @FXML
-    void switchToPesanan(ActionEvent event) throws IOException {
+    private void switchToBarang(ActionEvent event) throws IOException {
+        switchScene("BarangView.fxml", event);
+    }
+
+    @FXML
+    private void switchToBarangCrud(ActionEvent event) throws IOException {
+        switchScene("BarangCrud.fxml", event);
+    }
+
+    @FXML
+    private void switchToPemasok(ActionEvent event) throws IOException {
+        switchScene("PemasokView.fxml", event);
+    }
+
+    @FXML
+    private void switchToPelanggan(ActionEvent event) throws IOException {
+        switchScene("PelangganView.fxml", event);
+    }
+
+    @FXML
+    void switchToTransaksiIn(ActionEvent event) throws IOException {
+        switchScene("TransaksiInView.fxml", event);
+    }
+
+    @FXML
+    void switchToTransaksiOut(ActionEvent event) throws IOException {
+        switchScene("TransaksiOutView.fxml", event);
+    }
+
+    @FXML
+    private void switchToPesanan(ActionEvent event) throws IOException {
         switchScene("PesananView.fxml", event);
     }
 
     @FXML
-    void switchToOrder(ActionEvent event) throws IOException {
-        switchScene("Order.fxml", event);
+    private void switchToPesananCrud(ActionEvent event) throws IOException {
+        switchScene("PesananCrud.fxml", event);
     }
 
     @FXML
-    void logout(ActionEvent event) throws IOException {
+    private void logout(ActionEvent event) throws IOException {
         switchScene("login.fxml", event);
     }
 
@@ -124,78 +154,73 @@ public void refreshTable(List<Transaksi> updatedList) {
         stage.setFullScreen(true);
         stage.show();
     }
-    ObservableList<Transaksi> transaksis = Transaksi.Tlist();
     
+    @FXML
     public void initialize() {
-        
-        IdData.setCellValueFactory(new PropertyValueFactory<Transaksi, Integer>("Id"));
-        IdFakturData.setCellValueFactory(new PropertyValueFactory<Transaksi, Integer>("IdFaktur"));
-        JumlahData.setCellValueFactory(new PropertyValueFactory<Transaksi, Integer>("Jumlah"));
-        NamaData.setCellValueFactory(new PropertyValueFactory<Transaksi, String>("Nama"));
-        PembeliData.setCellValueFactory(new PropertyValueFactory<Transaksi, String>("Pembeli"));
-        PenjualData.setCellValueFactory(new PropertyValueFactory<Transaksi, String>("Penjual"));
-        TanggalData.setCellValueFactory(new PropertyValueFactory<Transaksi, String>("Tanggal"));
-        TipeData.setCellValueFactory(new PropertyValueFactory<Transaksi, String>("Tipe"));
-        AlamatData.setCellValueFactory(new PropertyValueFactory<Transaksi, String>("Alamat"));
-        DataTable.setItems(transaksis);
+        String currentNickname = SharedData.getInstance().getNickname();
+        identitas.setText("Hello, " + currentNickname);
 
-        AksiData.setCellFactory(new Callback<TableColumn<Transaksi, String>, TableCell<Transaksi, String>>() {
+        Id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        MetodePembayaran.setCellValueFactory(new PropertyValueFactory<>("metodePembayaran"));
+        Status.setCellValueFactory(new PropertyValueFactory<>("status"));
+        Tanggal.setCellValueFactory(new PropertyValueFactory<>("tanggal"));
+        Admin.setCellValueFactory(new PropertyValueFactory<>("admin"));
+        Nama.setCellValueFactory(new PropertyValueFactory<>("nama"));
+        Alamat.setCellValueFactory(new PropertyValueFactory<>("alamat"));
+        Tipe.setCellValueFactory(new PropertyValueFactory<>("tipe"));
+
+        // Custom cell factory for "Aksi" column
+        Aksi.setCellFactory(new Callback<TableColumn<Pesanan, Void>, TableCell<Pesanan, Void>>() {
             @Override
-            public TableCell<Transaksi, String> call(TableColumn<Transaksi, String> param) {
-                return new TableCell<Transaksi, String>() {
-                    final Button pesanButton = new Button("EDIT");
-
-                    @Override
-                    protected void updateItem(String item, boolean empty) {
+            public TableCell<Pesanan, Void> call(final TableColumn<Pesanan, Void> param) {
+                final TableCell<Pesanan, Void> cell = new TableCell<Pesanan, Void>() {
+        
+                    private final Button btnDetail = new Button("Detail");
+        
+                    {        
+                        btnDetail.setOnAction((ActionEvent event) -> {
+                            try {
+                                Pesanan pesanan = getTableView().getItems().get(getIndex());
+                                switchToDetailView(pesanan, event);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        });
+                    }
+                     @Override
+                    protected void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
-
                         if (empty) {
                             setGraphic(null);
-                            setText(null);
                         } else {
-                            setGraphic(pesanButton);
-                            setText(null);
-
-                            pesanButton.setOnAction(event -> {
-                                try {
-                                    FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/PesananCrud.fxml"));
-                                    Parent root = loader.load();
-                                    Stage stage = new Stage();
-                                    stage.setScene(new Scene(root));
-                                    stage.show();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }                            
-                            });
+                            GridPane gridPane = new GridPane();
+                            gridPane.setHgap(10);
+                            gridPane.add(btnDetail, 1, 0);
+                            setGraphic(gridPane);
                         }
                     }
                 };
+                return cell;
             }
         });
 
-        FilterBtn.getItems().forEach(item -> {
-            item.setOnAction(event -> {
-                String filterValue = item.getText(); // Get the selected filter value
-                if (filterValue.equals("Semua")) {
-                    DataTable.setItems(transaksis);
-                } else {
-                    filterTable(filterValue); // Call the method to filter the table
-                }
-            });
-        });
+        ObservableList<Pesanan> pesanans = Pesanan.getPesanansFromDatabase();
+        PesananTable.setItems(pesanans);
     }
 
-    private void filterTable(String filterValue) {
-        ObservableList<Transaksi> filteredList = FXCollections.observableArrayList();
+    private void switchToDetailView(Pesanan pesanan, ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/PesananDetail.fxml"));
+        Parent root = loader.load();
 
-        // Iterate through the original list and add items that match the filter
-        for (Transaksi transaksi : transaksis) {
-            if (transaksi.getTipe().equals(filterValue)) {
-                filteredList.add(transaksi);
-            }
-        }
+        // Get the controller of TransaksiInDetail
+        PesananDetailController controller = loader.getController();
+        // Pass the transaksi Id to the controller
+        controller.setPesananId(pesanan.getId());
 
-        // Update the table with the filtered data
-        DataTable.setItems(filteredList);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setFullScreen(true);
+        stage.show();
     }
 }

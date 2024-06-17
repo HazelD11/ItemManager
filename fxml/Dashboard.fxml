@@ -13,26 +13,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
+<GridPane maxHeight="-Infinity" prefHeight="750.0" prefWidth="1070.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" />
-    <ColumnConstraints hgrow="SOMETIMES" />
-      <ColumnConstraints hgrow="SOMETIMES" />
-      <ColumnConstraints hgrow="SOMETIMES" />
-      <ColumnConstraints hgrow="SOMETIMES" />
-      <ColumnConstraints hgrow="SOMETIMES" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="639.9999877929688" minWidth="263.99998779296874" prefWidth="319.8" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="806.4000122070313" minWidth="353.60000000000014" prefWidth="749.4000000000001" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints vgrow="SOMETIMES" />
-    <RowConstraints vgrow="SOMETIMES" />
-      <RowConstraints vgrow="SOMETIMES" />
-      <RowConstraints vgrow="SOMETIMES" />
-    <RowConstraints vgrow="SOMETIMES" />
-      <RowConstraints vgrow="SOMETIMES" />
-      <RowConstraints vgrow="SOMETIMES" />
-      <RowConstraints vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="0.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="321.79999389648435" minHeight="51.400001525878906" prefHeight="69.00000762939453" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="697.7999984741211" minHeight="148.79996337890623" prefHeight="680.1999923706055" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" text="ITEM MANAGER" textAlignment="CENTER">
@@ -43,7 +31,7 @@
             <Insets left="40.0" />
          </GridPane.margin>
       </Label>
-      <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="54.0" prefWidth="811.0" text="Hello, Admin" textAlignment="CENTER" GridPane.columnIndex="1">
+      <Label fx:id="identitas" alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="54.0" prefWidth="811.0" text="Hello, Admin" textAlignment="CENTER" GridPane.columnIndex="1">
          <font>
             <Font size="24.0" />
          </font>
@@ -54,24 +42,44 @@
             <Insets right="10.0" />
          </padding>
       </Label>
-      <VBox prefHeight="455.0" prefWidth="259.0" GridPane.rowIndex="4">
+      <VBox maxHeight="698.0" minHeight="500.0" prefHeight="647.0" prefWidth="259.0" GridPane.rowIndex="1">
          <children>
             <Button fx:id="DashboardBtn" mnemonicParsing="false" onAction="#switchToDashboard" prefHeight="100.0" prefWidth="320.0" text="DASHBOARD" textFill="#006fff">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="DatabaseBtn" mnemonicParsing="false" onAction="#switchToDatabase" prefHeight="100.0" prefWidth="320.0" text="DATABASE">
+            <Button fx:id="TransaksiInBtn" mnemonicParsing="false" onAction="#switchToTransaksiIn" prefHeight="100.0" prefWidth="320.0" text="data transaksi masuk">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="PesananBtn" mnemonicParsing="false" onAction="#switchToPesanan" prefHeight="100.0" prefWidth="320.0" text="PESANAN">
+            <Button fx:id="TransaksiOutBtn" mnemonicParsing="false" onAction="#switchToTransaksiOut" prefHeight="100.0" prefWidth="320.0" text="data transaksi keluar">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="OrderBtn" mnemonicParsing="false" onAction="#switchToOrder" prefHeight="100.0" prefWidth="320.0" text="ORDER">
+            <Button fx:id="PesananBtn" mnemonicParsing="false" onAction="#switchToPesanan" prefHeight="100.0" prefWidth="320.0" text="data pesanan">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="BarangBtn" mnemonicParsing="false" onAction="#switchToBarang" prefHeight="100.0" prefWidth="320.0" text="data barang">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="PemasokBtn" mnemonicParsing="false" onAction="#switchToPemasok" prefHeight="100.0" prefWidth="320.0" text="data pemasok">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="PelangganBtn" mnemonicParsing="false" onAction="#switchToPelanggan" prefHeight="100.0" prefWidth="320.0" text="data pelanggan">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Button>
+            <Button fx:id="AdminBtn" disable="true" mnemonicParsing="false" onAction="#switchToAdmin" prefHeight="100.0" prefWidth="320.0" text="data admin" visible="false">
                <font>
                   <Font size="24.0" />
                </font>
@@ -80,13 +88,10 @@
                <font>
                   <Font size="24.0" />
                </font>
-               <VBox.margin>
-                  <Insets top="300.0" />
-               </VBox.margin>
             </Button>
          </children>
       </VBox>
-      <VBox prefHeight="662.0" prefWidth="760.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+      <VBox prefHeight="662.0" prefWidth="760.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
             <Label text="STOCK SEDIKIT!">
                <font>
@@ -96,9 +101,10 @@
                   <Insets />
                </VBox.margin>
             </Label>
-            <TableView fx:id="StockTable" editable="true" prefHeight="235.0" prefWidth="600.0">
+            <TableView fx:id="StockTable" editable="true" prefHeight="174.0" prefWidth="750.0">
               <columns>
                 <TableColumn fx:id="IdStock" maxWidth="100.0" prefWidth="50.0" text="ID" />
+                  <TableColumn fx:id="KodeStock" maxWidth="100.0" prefWidth="50.0" text="Kode" />
                 <TableColumn fx:id="NamaStock" maxWidth="450.0" minWidth="20.0" prefWidth="300.0" text="Nama" />
                   <TableColumn fx:id="JumlahStock" maxWidth="100.0" minWidth="20.0" prefWidth="100.0" text="Stok" />
                   <TableColumn fx:id="AksiStock" maxWidth="150.0" prefWidth="200.0" text="Aksi" />
@@ -126,7 +132,8 @@
             <TableView fx:id="DataTable" editable="true" prefHeight="219.0" prefWidth="726.0">
               <columns>
                 <TableColumn fx:id="IdData" maxWidth="100.0" prefWidth="50.0" text="ID" />
-                <TableColumn fx:id="NamaData" maxWidth="450.0" minWidth="20.0" prefWidth="300.0" text="Nama " />
+                <TableColumn fx:id="KodeData" maxWidth="150.0" minWidth="20.0" prefWidth="300.0" text="Kode " />
+                <TableColumn fx:id="NamaData" maxWidth="300.0" minWidth="20.0" prefWidth="300.0" text="Nama " />
                   <TableColumn fx:id="JumlahData" maxWidth="100.0" minWidth="20.0" prefWidth="100.0" text="Stok" />
                   <TableColumn fx:id="StatusData" maxWidth="150.0" prefWidth="200.0" text="Status" />
               </columns>

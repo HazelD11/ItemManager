@@ -10,7 +10,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import main.Dashboard;
 import data.Admin;
-import data.AdminDAO;
+import data.SharedData;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class LoginController {
 
@@ -25,42 +29,65 @@ public class LoginController {
 
     @FXML
     private TextField fxUser;
+    
+    private String hashedPass;
 
-    private ObservableList<Admin> admin; // Tambahkan atribut untuk menyimpan data admin
-
+    private ObservableList<Admin> admin;
+    
     public void initialize() {
-        // Ambil data admin dari database saat controller diinisialisasi
-        admin = AdminDAO.getAdminsFromDatabase();
+        admin = Admin.getAdminsFromDatabase();
     }
-
+   
     public void login() {
         String Username = fxUser.getText();
-        String Password = fxPass.getText();
+        
+        try {
+            hashedPass = toHexString(getSHA(fxPass.getText()));
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println("Exception thrown for incorrect algorithm: " + e);
+        }
 
-        // Check if any admin's credentials match
         boolean loggedIn = false;
+        String nick = "";
+        int adId = -1; // Initialize adId
         for (Admin adminData : admin) {
-            if (Username.equals(adminData.getUsername()) && Password.equals(adminData.getPassword())) {
+            if (Username.equals(adminData.getUsername()) && hashedPass.equals(adminData.getPassword())) {
                 loggedIn = true;
+                adId = adminData.getId();
+                nick = adminData.getNickname();
                 break;
             }
         }
 
-        // Check if username and password match
         if (loggedIn) {
             System.out.println("berhasil");
+            SharedData.getInstance().setNickname(nick); // Store the nickname in SharedData
+            SharedData.getInstance().setAdminId(adId); // Store the adminId in SharedData
             Dashboard dashboard = new Dashboard();
             try {
                 dashboard.start(new Stage());
             } catch (Exception e) {
-                // Handle exception
                 System.err.println("Error opening dashboard: " + e.getMessage());
             }
-            // Close the login window
             ((Stage) fxLogBtn.getScene().getWindow()).close();
         } else {
             System.out.println("ID atau Password Salah!");
+            System.out.println(hashedPass);
         }
+    }
+    
+    public static byte[] getSHA(String input) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        return md.digest(input.getBytes(StandardCharsets.UTF_8));
+    }
+     
+    public static String toHexString(byte[] hash) {
+        BigInteger number = new BigInteger(1, hash);
+        StringBuilder hexString = new StringBuilder(number.toString(16));
+        while (hexString.length() < 64) {
+            hexString.insert(0, '0');
+        }
+        return hexString.toString();
     }
 
     @FXML
@@ -68,6 +95,5 @@ public class LoginController {
         login();
     }
 
-    public void setMainWindow(Stage primaryStage) {
-    }
+    public void setMainWindow(Stage primaryStage) {}
 }

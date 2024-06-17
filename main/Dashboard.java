@@ -19,7 +19,7 @@ public class Dashboard extends Application{
             GridPane grid = new GridPane();
             grid.getChildren().add(root);
             // grid.setPadding(new Insets(10));
-            grid.setAlignment(Pos.TOP_LEFT);
+            grid.setAlignment(Pos.CENTER);
             Scene scene = new Scene(grid);
             primaryStage.setFullScreen(true);
             primaryStage.setScene(scene);

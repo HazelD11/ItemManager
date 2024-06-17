@@ -4,15 +4,15 @@ import java.sql.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-public class Transaksi {
+public class TransaksiIn {
     int id;
-    String admin, nama, toko, alamat, metodePembayaran, status, tipe, nomorReferensi, tanggal;
+    String admin, nama, nomorPesanan, alamat, metodePembayaran, status, tipe, nomorReferensi, tanggal;
 
-    public Transaksi(int id, String admin, String nama, String toko, String alamat, String metodePembayaran, String status, String tipe, String nomorReferensi,String tanggal) {
+    public TransaksiIn(int id, String admin, String nama, String nomorPesanan, String alamat, String metodePembayaran, String status, String tipe, String nomorReferensi,String tanggal) {
                         this.id = id;
                         this.admin = admin;
                         this.nama = nama;
-                        this.toko = toko;
+                        this.nomorPesanan = nomorPesanan;
                         this.alamat = alamat;
                         this.metodePembayaran = metodePembayaran;
                         this.status = status;
@@ -27,7 +27,7 @@ public class Transaksi {
                 "id=" + id +
                 ", admin=" + admin +
                 ", nama=" + nama +
-                ", toko=" + toko +
+                ", nomorPesanan=" + nomorPesanan +
                 ", alamat=" + alamat +
                 ", metodePembayaran=" + metodePembayaran +
                 ", status=" + status +
@@ -37,8 +37,8 @@ public class Transaksi {
                 '}';
     }
 
-    public static ObservableList<Transaksi> getTransaksisFromDatabase() {
-        ObservableList<Transaksi> Transaksis = FXCollections.observableArrayList();
+    public static ObservableList<TransaksiIn> getTransaksiInsFromDatabase() {
+        ObservableList<TransaksiIn> TransaksiIns = FXCollections.observableArrayList();
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -47,24 +47,26 @@ public class Transaksi {
             connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/itemmanager", "root", "");
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT t.id AS tid, t.metodePembayaran AS mtdpb, t.status AS ts,"+
-                                                " t.tipe AS tp, t.nomorReferensi AS tnr, t.tanggal AS tgl,"+
-                                                " ad.nickname AS adn, pl.nama AS pnama, pl.namaToko AS pntoko,"+
-                                                " pl.alamat AS palmt FROM transaksi t JOIN admin ad ON ad.id = t.idAdmin"+
-                                                " JOIN pelanggan pl ON pl.id = t.idPelanggan WHERE t.tipe='keluar'"+
-                                                " ORDER BY CASE WHEN status='menunggu' THEN 1 ELSE 2 END, t.id ASC");
+                                                " t.tipe AS tp, t.nomorReferensi AS tnr, t.tanggal AS tgl, p.id AS pid,"+
+                                                " ad.nickname AS adn, pmk.nama AS pmknm, pmk.alamat AS pmkalmt FROM transaksi t "+
+                                                "JOIN admin ad ON ad.id = t.idAdmin"+
+                                                " JOIN pemasok pmk ON pmk.id = t.idPemasok "+
+                                                "JOIN pesanan p ON p.id = t.idPesanan"+
+                                                " WHERE t.tipe='masuk'"+
+                                                " ORDER BY CASE WHEN t.status='menunggu' THEN 1 ELSE 2 END, t.id ASC");
 
             while (resultSet.next()) {
                 int Id = resultSet.getInt("tid");
                 String Admin = resultSet.getString("adn");
-                String Nama = resultSet.getString("pnama");
-                String Toko = resultSet.getString("pntoko");
-                String Alamat = resultSet.getString("palmt");
+                String Nama = resultSet.getString("pmknm");
+                String NomorPesanan = resultSet.getString("pid");
+                String Alamat = resultSet.getString("pmkalmt");
                 String MetodePembayaran = resultSet.getString("mtdpb");
                 String Status = resultSet.getString("ts");
                 String Tipe = resultSet.getString("tp");
                 String NomorReferensi = resultSet.getString("tnr");
                 String Tanggal = resultSet.getString("tgl");
-                Transaksis.add(new Transaksi(Id,Admin,Nama,Toko,Alamat,MetodePembayaran,Status,Tipe,NomorReferensi,Tanggal));
+                TransaksiIns.add(new TransaksiIn(Id,Admin,Nama,NomorPesanan,Alamat,MetodePembayaran,Status,Tipe,NomorReferensi,Tanggal));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -78,7 +80,7 @@ public class Transaksi {
             }
         }
 
-        return Transaksis;
+        return TransaksiIns;
     }
 
     public int getId() {
@@ -105,12 +107,12 @@ public class Transaksi {
         this.nama = nama;
     }
 
-    public String getToko() {
-        return toko;
+    public String getNomorPesanan() {
+        return nomorPesanan;
     }
 
-    public void setToko(String toko) {
-        this.toko = toko;
+    public void setNomorPesanan(String nomorPesanan) {
+        this.nomorPesanan = nomorPesanan;
     }
 
     public String getAlamat() {
@@ -159,7 +161,5 @@ public class Transaksi {
 
     public void setTanggal(String tanggal) {
         this.tanggal = tanggal;
-    }
-
-   
+    }      
 }
