@@ -1,9 +1,6 @@
 package main;
 import controller.LoginController;
-import data.Admin;
-import data.AdminDAO;
 import javafx.application.Application;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,7 +16,6 @@ public class Index extends Application{
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         try {
-            ObservableList<Admin> admin = AdminDAO.getAdminsFromDatabase();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/Login.fxml"));
             Parent root = loader.load();
             GridPane grid = new GridPane();

@@ -10,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -22,6 +23,7 @@ import javafx.scene.Node;
 import java.io.IOException;
 
 import data.Barang;
+import data.SharedData;
 
 public class DashboardController {
 
@@ -29,13 +31,25 @@ public class DashboardController {
     private Button DashboardBtn;
 
     @FXML
-    private Button DatabaseBtn;
+    private Button AdminBtn;
 
+    @FXML
+    private Button BarangBtn;
+
+    @FXML
+    private Button PemasokBtn;
+    
+    @FXML
+    private Button PelangganBtn;
+    
+    @FXML
+    private Button TransaksiInBtn;
+
+    @FXML
+    private Button TransaksiOutBtn;
+ 
     @FXML
     private Button PesananBtn;
-
-    @FXML
-    private Button OrderBtn;
 
     @FXML
     private Button KeluarBtn;
@@ -46,20 +60,40 @@ public class DashboardController {
     }
 
     @FXML
-    void switchToDatabase(ActionEvent event) throws IOException {
-        switchScene("Database.fxml", event);
+    void switchToAdmin(ActionEvent event) throws IOException {
+        switchScene("AdminView.fxml", event);
+    }
+    
+    @FXML
+    void switchToBarang(ActionEvent event) throws IOException {
+        switchScene("BarangView.fxml", event);
+    }
+    
+    @FXML
+    void switchToPemasok(ActionEvent event) throws IOException {
+        switchScene("PemasokView.fxml", event);
+    }
+
+    @FXML
+    void switchToPelanggan(ActionEvent event) throws IOException {
+        switchScene("PelangganView.fxml", event);
+    }
+
+    @FXML
+    void switchToTransaksiIn(ActionEvent event) throws IOException {
+        switchScene("TransaksiInView.fxml", event);
+    }
+
+    @FXML
+    void switchToTransaksiOut(ActionEvent event) throws IOException {
+        switchScene("TransaksiOutView.fxml", event);
     }
 
     @FXML
     void switchToPesanan(ActionEvent event) throws IOException {
         switchScene("PesananView.fxml", event);
     }
-
-    @FXML
-    void switchToOrder(ActionEvent event) throws IOException {
-        switchScene("Order.fxml", event);
-    }
-
+    
     @FXML
     void logout(ActionEvent event) throws IOException {
         switchScene("login.fxml", event);
@@ -89,6 +123,9 @@ public class DashboardController {
 
     @FXML
     private TableColumn<Barang, String> NamaData;
+    
+    @FXML
+    private TableColumn<Barang, String> KodeData;
 
     @FXML
     private TableColumn<Barang, String> StatusData;
@@ -108,17 +145,28 @@ public class DashboardController {
     @FXML
     private TableColumn<Barang, String> NamaStock;
 
+    
+    @FXML
+    private TableColumn<Barang, String> KodeStock;
+
     @FXML
     private TableColumn<Barang, String> AksiStock;
 
+    @FXML
+    private Label identitas;
+
     // public Integer checker;
     
-    ObservableList<Barang> barangs = Barang.list();
+    ObservableList<Barang> barangs = Barang.getBarangsFromDatabase();
 
     public void initialize() {
+        String currentNickname = SharedData.getInstance().getNickname();
+        identitas.setText("Hello, " + currentNickname);
+
         IdData.setCellValueFactory(new PropertyValueFactory<Barang, Integer>("Id"));
         JumlahData.setCellValueFactory(new PropertyValueFactory<Barang, Integer>("Stok"));
         NamaData.setCellValueFactory(new PropertyValueFactory<Barang, String>("Nama"));
+        KodeData.setCellValueFactory(new PropertyValueFactory<Barang, String>("Kode"));
         StatusData.setCellValueFactory(new PropertyValueFactory<Barang, String>("Status"));
         DataTable.setItems(barangs);
 
@@ -126,11 +174,12 @@ public class DashboardController {
         IdStock.setCellValueFactory(new PropertyValueFactory<>("Id"));
         JumlahStock.setCellValueFactory(new PropertyValueFactory<>("Stok"));
         NamaStock.setCellValueFactory(new PropertyValueFactory<>("Nama"));
+        KodeStock.setCellValueFactory(new PropertyValueFactory<>("Kode"));
 
         // Filter static data for StockTable
         ObservableList<Barang> stockItems = FXCollections.observableArrayList();
         for (Barang barang : barangs) {
-            if (barang.getStok() < barang.getMinimal()) {
+            if (barang.getStok() <= barang.getMinimal()) {
                 stockItems.add(barang);
             }
         }

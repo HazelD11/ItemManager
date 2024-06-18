@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="850.0" prefWidth="1535.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PesananController">
+<GridPane prefHeight="850.0" prefWidth="1535.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.TransaksiInController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="368.40001220703124" minWidth="258.4" prefWidth="320.9999633789063" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="1213.6000366210938" minWidth="940.3999877929687" prefWidth="1213.6000366210938" />
@@ -45,7 +45,7 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="TransaksiInBtn" mnemonicParsing="false" onAction="#switchToTransaksiIn" prefHeight="100.0" prefWidth="320.0" text="data transaksi masuk">
+            <Button fx:id="TransaksiInBtn" mnemonicParsing="false" onAction="#switchToTransaksiIn" prefHeight="100.0" prefWidth="320.0" text="data transaksi masuk" textFill="#006fff">
                <font>
                   <Font size="24.0" />
                </font>
@@ -55,7 +55,7 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="PesananBtn" mnemonicParsing="false" onAction="#switchToPesanan" prefHeight="100.0" prefWidth="320.0" text="data pesanan" textFill="#006fff">
+            <Button fx:id="PesananBtn" mnemonicParsing="false" onAction="#switchToPesanan" prefHeight="100.0" prefWidth="320.0" text="data pesanan">
                <font>
                   <Font size="24.0" />
                </font>
@@ -94,7 +94,7 @@
          <children>
             <HBox prefHeight="61.0" prefWidth="771.0">
                <children>
-                  <Button fx:id="PesananCrudBtn" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToPesananCrud" prefHeight="38.0" prefWidth="94.0" text="TAMBAH" textAlignment="CENTER">
+                  <Button fx:id="TransaksiInCrudBtn" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToTransaksiInCrud" prefHeight="38.0" prefWidth="94.0" text="TAMBAH" textAlignment="CENTER">
                      <HBox.margin>
                         <Insets left="1020.0" />
                      </HBox.margin>
@@ -104,9 +104,11 @@
                   </Button>
                </children>
             </HBox>
-            <TableView fx:id="PesananTable" editable="true" prefHeight="542.0" prefWidth="1154.0">
+            <TableView fx:id="TransaksiTable" editable="true" prefHeight="542.0" prefWidth="1154.0">
               <columns>
                 <TableColumn fx:id="Id" maxWidth="100.0" minWidth="6.399993538856506" prefWidth="45.60003584623337" text="ID" />
+                  <TableColumn fx:id="NomorReferensi" minWidth="0.0" prefWidth="82.39999771118164" text="no referensi" />
+                  <TableColumn fx:id="NomorPesanan" minWidth="0.0" prefWidth="82.39999771118164" text="no pesanan" />
                   <TableColumn fx:id="Admin" maxWidth="472.0000305175781" minWidth="0.0" prefWidth="81.5999755859375" text="admin" />
                   <TableColumn fx:id="Nama" maxWidth="516.8000183105469" prefWidth="134.3999786376953" text="nama" />
                   <TableColumn fx:id="Alamat" maxWidth="516.8000183105469" prefWidth="180.800048828125" text="alamat" />

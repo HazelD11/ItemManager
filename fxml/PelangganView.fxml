@@ -12,17 +12,17 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane prefHeight="850.0" prefWidth="1535.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PesananController">
+<GridPane prefHeight="662.0" prefWidth="1153.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.PelangganController">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="368.40001220703124" minWidth="258.4" prefWidth="320.9999633789063" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1213.6000366210938" minWidth="940.3999877929687" prefWidth="1213.6000366210938" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="491.40001220703124" minWidth="316.99998779296874" prefWidth="316.99998779296874" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="995.2000122070312" minWidth="615.9999481201171" prefWidth="995.2000122070312" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="175.60001220703126" minHeight="48.00000762939453" prefHeight="76.8" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="869.1999923706055" minHeight="611.2000076293946" prefHeight="773.4" vgrow="SOMETIMES" />
+    <RowConstraints vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="687.9999969482421" minHeight="607.2000015258789" prefHeight="607.2000015258789" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="84.0" prefWidth="321.0" text="ITEM MANAGER" textAlignment="CENTER">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="65.0" prefWidth="318.0" text="ITEM MANAGER" textAlignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
@@ -30,7 +30,7 @@
             <Insets />
          </GridPane.margin>
       </Label>
-      <Label fx:id="identitas" alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="54.0" prefWidth="1254.0" text="Hello, Admin" textAlignment="CENTER" GridPane.columnIndex="1">
+      <Label fx:id="identitas" alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="54.0" prefWidth="811.0" text="Hello, Admin" textAlignment="CENTER" GridPane.columnIndex="1">
          <font>
             <Font size="24.0" />
          </font>
@@ -55,7 +55,7 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="PesananBtn" mnemonicParsing="false" onAction="#switchToPesanan" prefHeight="100.0" prefWidth="320.0" text="data pesanan" textFill="#006fff">
+            <Button fx:id="PesananBtn" mnemonicParsing="false" onAction="#switchToPesanan" prefHeight="100.0" prefWidth="320.0" text="data pesanan">
                <font>
                   <Font size="24.0" />
                </font>
@@ -70,7 +70,7 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="PelangganBtn" mnemonicParsing="false" onAction="#switchToPelanggan" prefHeight="100.0" prefWidth="320.0" text="data pelanggan">
+            <Button fx:id="PelangganBtn" mnemonicParsing="false" onAction="#switchToPelanggan" prefHeight="100.0" prefWidth="320.0" text="data pelanggan" textFill="#006fff">
                <font>
                   <Font size="24.0" />
                </font>
@@ -90,13 +90,13 @@
             </Button>
          </children>
       </VBox>
-      <VBox prefHeight="839.0" prefWidth="1088.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <VBox prefHeight="662.0" prefWidth="760.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
             <HBox prefHeight="61.0" prefWidth="771.0">
                <children>
-                  <Button fx:id="PesananCrudBtn" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToPesananCrud" prefHeight="38.0" prefWidth="94.0" text="TAMBAH" textAlignment="CENTER">
+                  <Button fx:id="PelangganCrudBtn" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToPelangganCrud" prefHeight="38.0" prefWidth="94.0" text="TAMBAH" textAlignment="CENTER">
                      <HBox.margin>
-                        <Insets left="1020.0" />
+                        <Insets left="650.0" />
                      </HBox.margin>
                      <font>
                         <Font size="16.0" />
@@ -104,17 +104,13 @@
                   </Button>
                </children>
             </HBox>
-            <TableView fx:id="PesananTable" editable="true" prefHeight="542.0" prefWidth="1154.0">
+            <TableView fx:id="PelangganTable" editable="true" prefHeight="219.0" prefWidth="726.0">
               <columns>
-                <TableColumn fx:id="Id" maxWidth="100.0" minWidth="6.399993538856506" prefWidth="45.60003584623337" text="ID" />
-                  <TableColumn fx:id="Admin" maxWidth="472.0000305175781" minWidth="0.0" prefWidth="81.5999755859375" text="admin" />
-                  <TableColumn fx:id="Nama" maxWidth="516.8000183105469" prefWidth="134.3999786376953" text="nama" />
-                  <TableColumn fx:id="Alamat" maxWidth="516.8000183105469" prefWidth="180.800048828125" text="alamat" />
-                  <TableColumn fx:id="Tanggal" maxWidth="516.8000183105469" prefWidth="81.60009765625" text="tanggal" />
-                  <TableColumn fx:id="MetodePembayaran" maxWidth="516.8000183105469" prefWidth="114.4000244140625" text="pembayaran" />
-                  <TableColumn fx:id="Status" maxWidth="516.8000183105469" prefWidth="125.5999755859375" text="status" />
-                  <TableColumn fx:id="Tipe" maxWidth="516.8000183105469" prefWidth="93.60009765625" text="tipe" />
-                  <TableColumn fx:id="Aksi" maxWidth="516.8000183105469" prefWidth="107.19989013671875" text="aksi" />
+                <TableColumn fx:id="IdPelanggan" maxWidth="100.0" prefWidth="50.0" text="ID" />
+                  <TableColumn fx:id="NamaPelanggan" prefWidth="138.39995574951172" text="Nama" />
+                <TableColumn fx:id="NamaToko" maxWidth="450.0" minWidth="20.0" prefWidth="168.800048828125" text="Nama Toko" />
+                  <TableColumn fx:id="Alamat" maxWidth="252.800048828125" minWidth="20.0" prefWidth="238.40008544921875" text="Alamat" />
+                  <TableColumn fx:id="AksiPelanggan" maxWidth="150.0" prefWidth="200.0" text="Aksi" />
               </columns>
                <VBox.margin>
                   <Insets right="10.0" />

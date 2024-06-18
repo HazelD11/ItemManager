@@ -12,16 +12,15 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import data.Barang;
-import data.Pemasok;
+import data.Pelanggan;
 import data.SharedData;
 
 import java.io.IOException;
 import java.sql.*;
-
-public class PesananCrudController {
+public class TransaksiOutCrudController {
 
     @FXML
-    private Button AdminBtn, BarangBtn, DashboardBtn, KeluarBtn, KembaliBtn, PelangganBtn, PemasokBtn, PesananBtn, TambahPesanan, TransaksiInBtn, TransaksiOutBtn, TambahBarang;
+    private Button AdminBtn,BarangBtn,DashboardBtn, TransaksiOutBtn, TransaksiInBtn, TambahTransaksiOut, TambahBarang, PesananBtn, PemasokBtn, PelangganBtn, KembaliBtn, KeluarBtn;
 
     @FXML
     private TableView<Barang> BarangTable;
@@ -36,23 +35,29 @@ public class PesananCrudController {
     private ComboBox<Barang> idBarang;
 
     @FXML
-    private ComboBox<Pemasok> idPemasok;
+    private ComboBox<Pelanggan> idPelanggan;
 
     @FXML
     private ComboBox<String> metodePembayaran;
 
     @FXML
-    private TextField id;
+    private Label identitas;
 
     @FXML
     private TextField jumlah;
 
     @FXML
+    private TextField id;
+
+    @FXML
     private TextArea Alamat;
 
     @FXML
-    private Label identitas;
-    
+    private TextField namaToko;
+
+    @FXML
+    private TextField nomorReferensi;
+
     @FXML
     private DatePicker tanggal;
 
@@ -69,7 +74,7 @@ public class PesananCrudController {
 
         // Populate ComboBoxes
         ObservableList<Barang> barangList = Barang.getBarangsFromDatabase();
-        ObservableList<Pemasok> pemasokList = Pemasok.getPemasoksFromDatabase();
+        ObservableList<Pelanggan> pelangganList = Pelanggan.getPelanggansFromDatabase();
 
         idBarang.setItems(barangList);
         idBarang.setConverter(new javafx.util.StringConverter<Barang>() {
@@ -84,26 +89,27 @@ public class PesananCrudController {
             }
         });
 
-        idPemasok.setItems(pemasokList);
-        idPemasok.setConverter(new javafx.util.StringConverter<Pemasok>() {
+        idPelanggan.setItems(pelangganList);
+        idPelanggan.setConverter(new javafx.util.StringConverter<Pelanggan>() {
             @Override
-            public String toString(Pemasok pemasok) {
-                return pemasok.getNama();
+            public String toString(Pelanggan pelanggan) {
+                return pelanggan.getNama();
             }
 
             @Override
-            public Pemasok fromString(String string) {
-                return pemasokList.stream().filter(p -> p.getNama().equals(string)).findFirst().orElse(null);
+            public Pelanggan fromString(String string) {
+                return pelangganList.stream().filter(p -> p.getNama().equals(string)).findFirst().orElse(null);
             }
         });
 
         metodePembayaran.setItems(FXCollections.observableArrayList("Cash", "Transfer"));
 
-        // Set event listener for idPemasok ComboBox
-        idPemasok.setOnAction(event -> {
-            Pemasok selectedPemasok = idPemasok.getSelectionModel().getSelectedItem();
-            if (selectedPemasok != null) {
-                Alamat.setText(selectedPemasok.getAlamat());
+        // Set event listener for idPelanggan ComboBox
+        idPelanggan.setOnAction(event -> {
+            Pelanggan selectedPelanggan = idPelanggan.getSelectionModel().getSelectedItem();
+            if (selectedPelanggan != null) {
+                namaToko.setText(selectedPelanggan.getNamaToko());
+                Alamat.setText(selectedPelanggan.getAlamat());
             }
         });
 
@@ -115,26 +121,27 @@ public class PesananCrudController {
     }
 
     @FXML
-    void createPesanan(ActionEvent event) {
+    void createTransaksiOut(ActionEvent event) {
         System.out.println("Admin ID: " + currentAdmin);
-        System.out.println("Pemasok ID: " + idPemasok.getSelectionModel().getSelectedItem().getId());
+        System.out.println("Pelanggan ID: " + idPelanggan.getSelectionModel().getSelectedItem().getId());
         
         try (Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/itemmanager", "root", "")) {
-            String insertPesananQuery = "INSERT INTO pesanan (idAdmin, idPemasok, tanggal, metodePembayaran, tipe, status) VALUES (?, ?, ?, ?, 'disetujui', 'menunggu')";
-            try (PreparedStatement psPesanan = connection.prepareStatement(insertPesananQuery, Statement.RETURN_GENERATED_KEYS)) {
-                psPesanan.setInt(1, currentAdmin);
-                psPesanan.setInt(2, idPemasok.getSelectionModel().getSelectedItem().getId());
-                psPesanan.setDate(3, Date.valueOf(tanggal.getValue()));
-                psPesanan.setString(4, metodePembayaran.getSelectionModel().getSelectedItem());
+            String insertTransaksiOutQuery = "INSERT INTO transaksi (idAdmin, idPelanggan, tanggal, metodePembayaran,nomorReferensi, tipe, status) VALUES (?, ?, ?, ?, ?,'keluar', 'menunggu')";
+            try (PreparedStatement psTransaksiOut = connection.prepareStatement(insertTransaksiOutQuery, Statement.RETURN_GENERATED_KEYS)) {
+                psTransaksiOut.setInt(1, currentAdmin);
+                psTransaksiOut.setInt(2, idPelanggan.getSelectionModel().getSelectedItem().getId());
+                psTransaksiOut.setDate(3, Date.valueOf(tanggal.getValue()));
+                psTransaksiOut.setString(4, metodePembayaran.getSelectionModel().getSelectedItem());
+                psTransaksiOut.setString(5, nomorReferensi.getText());
 
-                psPesanan.executeUpdate();
-                ResultSet rs = psPesanan.getGeneratedKeys();
+                psTransaksiOut.executeUpdate();
+                ResultSet rs = psTransaksiOut.getGeneratedKeys();
                 if (rs.next()) {
-                    int pesananId = rs.getInt(1);
-                    String insertDetailQuery = "INSERT INTO pesanandetail (idPesanan, idBarang, jumlah) VALUES (?, ?, ?)";
+                    int transaksiOutId = rs.getInt(1);
+                    String insertDetailQuery = "INSERT INTO transaksidetail (idTransaksi, idBarang, jumlah) VALUES (?, ?, ?)";
                     try (PreparedStatement psDetail = connection.prepareStatement(insertDetailQuery)) {
                         for (Barang barang : selectedBarang) {
-                            psDetail.setInt(1, pesananId);
+                            psDetail.setInt(1, transaksiOutId);
                             psDetail.setInt(2, barang.getId());
                             psDetail.setInt(3, barang.getStok());
                             psDetail.addBatch();
@@ -149,7 +156,6 @@ public class PesananCrudController {
             e.printStackTrace();
         }
     }
-
     @FXML
     void tambahBarang(ActionEvent event) {
         Barang selected = idBarang.getSelectionModel().getSelectedItem();
@@ -181,19 +187,20 @@ public class PesananCrudController {
 
     private void clearForm() {
         idBarang.getSelectionModel().clearSelection();
-        idPemasok.getSelectionModel().clearSelection();
+        idPelanggan.getSelectionModel().clearSelection();
         metodePembayaran.getSelectionModel().clearSelection();
         id.clear();
         jumlah.clear();
         Alamat.clear();
         tanggal.setValue(null);
+        namaToko.clear();
         selectedBarang.clear();
         BarangTable.refresh();
     }
 
     @FXML
     void kembaliBtn(ActionEvent event) throws IOException {
-        switchToPesanan(event);
+        switchToTransaksiOut(event);
     }
 
     @FXML
@@ -254,4 +261,5 @@ public class PesananCrudController {
         stage.setFullScreen(true);
         stage.show();
     }
+
 }
