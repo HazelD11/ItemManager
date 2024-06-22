@@ -2,10 +2,14 @@ package controller;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
+
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,14 +19,18 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import data.SharedData;
@@ -32,6 +40,15 @@ public class TransaksiInController {
 
     @FXML
     private Label identitas;
+
+    @FXML
+    private DatePicker DariTanggal;
+
+    @FXML
+    private DatePicker SampaiTanggal;
+
+    @FXML
+    private Button FilterTanggal;
 
     @FXML
     private Button AdminBtn;
@@ -154,19 +171,26 @@ public class TransaksiInController {
         switchScene("login.fxml", event);
     }
 
-    private void switchScene(String sceneName, ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../fxml/" + sceneName));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        GridPane grid = new GridPane();
-        grid.getChildren().add(root);
-        grid.setPadding(new Insets(20));
-        grid.setAlignment(Pos.CENTER);
-        Scene scene = new Scene(grid);
-        stage.setScene(scene);
-        stage.setFullScreen(true);
-        stage.show();
+    @FXML
+    void FilterTanggal(ActionEvent event) throws IOException {
+        ObservableList<TransaksiIn> FilterList = FXCollections.observableArrayList();
+        Date dariTanggal = (DariTanggal.getValue() != null) ? Date.valueOf(DariTanggal.getValue()) : null;
+        Date sampaiTanggal = (SampaiTanggal.getValue() != null) ? Date.valueOf(SampaiTanggal.getValue()) : null;
+
+        ObservableList<TransaksiIn> transaksiIns = TransaksiIn.getTransaksiInsFromDatabase();
+
+        for (TransaksiIn transaksiIn : transaksiIns) {
+            Date tgl = Date.valueOf(transaksiIn.getTanggal());
+            if ((dariTanggal == null || tgl.compareTo(dariTanggal) >= 0) 
+                &&
+                (sampaiTanggal == null || tgl.compareTo(sampaiTanggal) <= 0)) {
+                    FilterList.add(transaksiIn);
+            }
+        }
+        TransaksiTable.setItems(FilterList);
+        TransaksiTable.refresh();
     }
-    
+
     @FXML
     public void initialize() {
         String currentNickname = SharedData.getInstance().getNickname();
@@ -188,22 +212,29 @@ public class TransaksiInController {
             @Override
             public TableCell<TransaksiIn, Void> call(final TableColumn<TransaksiIn, Void> param) {
                 final TableCell<TransaksiIn, Void> cell = new TableCell<TransaksiIn, Void>() {
-        
+
                     private final CheckBox checkBox = new CheckBox();
                     private final Button btnDetail = new Button("Detail");
-        
+
                     {
                         checkBox.setOnAction((ActionEvent event) -> {
                             TransaksiIn transaksiIn = getTableView().getItems().get(getIndex());
                             if (checkBox.isSelected()) {
-                                // Update the status to "berhasil" in the database
-                                updateStatus(transaksiIn.getId(), transaksiIn.getNomorPesanan(), "berhasil");
-                                transaksiIn.setStatus("berhasil");
-                                checkBox.setDisable(true);  // Disable the checkbox
+                                // Show confirmation dialog
+                                boolean confirmed = showConfirmationDialog("Confirmation", "Are you sure you want to update the status to 'berhasil'?");
+
+                                if (confirmed) {
+                                    // Update the status to "berhasil" in the database
+                                    updateStatus(transaksiIn.getId(), transaksiIn.getNomorPesanan(), "berhasil");
+                                    transaksiIn.setStatus("berhasil");
+                                    checkBox.setDisable(true);  // Disable the checkbox
+                                } else {
+                                    checkBox.setSelected(false);  // Uncheck the checkbox
+                                }
                             }
                             getTableView().refresh();
                         });
-        
+
                         btnDetail.setOnAction((ActionEvent event) -> {
                             try {
                                 TransaksiIn transaksiIn = getTableView().getItems().get(getIndex());
@@ -213,7 +244,7 @@ public class TransaksiInController {
                             }
                         });
                     }
-        
+
                     @Override
                     protected void updateItem(Void item, boolean empty) {
                         super.updateItem(item, empty);
@@ -299,6 +330,20 @@ public class TransaksiInController {
         }
     }
 
+    private boolean showConfirmationDialog(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        // Modality.APPLICATION_MODAL makes sure that the user cannot interact with
+        // other windows until they close the dialog
+        alert.initModality(Modality.APPLICATION_MODAL);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.isPresent() && result.get() == ButtonType.OK;
+    }
+
     private void switchToDetailView(TransaksiIn transaksiIn, ActionEvent event) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/TransaksiInDetail.fxml"));
         Parent root = loader.load();
@@ -310,6 +355,19 @@ public class TransaksiInController {
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setFullScreen(true);
+        stage.show();
+    }
+
+    private void switchScene(String sceneName, ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("../fxml/" + sceneName));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        GridPane grid = new GridPane();
+        grid.getChildren().add(root);
+        grid.setPadding(new Insets(20));
+        grid.setAlignment(Pos.CENTER);
+        Scene scene = new Scene(grid);
         stage.setScene(scene);
         stage.setFullScreen(true);
         stage.show();

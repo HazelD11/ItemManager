@@ -24,7 +24,7 @@
     <RowConstraints maxHeight="687.1999938964843" minHeight="430.39998703002925" prefHeight="538.6000122070312" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" text="ITEM MANAGER" textAlignment="CENTER">
+      <Label alignment="CENTER" contentDisplay="CENTER" styleClass="font" stylesheets="@../css/style.css" text="ITEM MANAGER" textAlignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
@@ -32,7 +32,7 @@
             <Insets left="40.0" />
          </GridPane.margin>
       </Label>
-      <Label fx:id="identitas" alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="54.0" prefWidth="811.0" text="Hello, Admin" textAlignment="CENTER" GridPane.columnIndex="1">
+      <Label fx:id="identitas" alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="54.0" prefWidth="811.0" styleClass="font" stylesheets="@../css/style.css" text="Hello, Admin" textAlignment="CENTER" GridPane.columnIndex="1">
          <font>
             <Font size="24.0" />
          </font>
@@ -62,7 +62,7 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="BarangBtn" mnemonicParsing="false" onAction="#switchToBarang" prefHeight="100.0" prefWidth="320.0" text="data barang" textFill="#006fff">
+            <Button fx:id="BarangBtn" mnemonicParsing="false" onAction="#switchToBarang" prefHeight="100.0" prefWidth="320.0" styleClass="btnPilih" stylesheets="@../css/style.css" text="data barang" textFill="#006fff">
                <font>
                   <Font size="24.0" />
                </font>
@@ -82,7 +82,7 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="KeluarBtn" mnemonicParsing="false" onAction="#logout" prefHeight="100.0" prefWidth="320.0" text="KELUAR">
+            <Button fx:id="KeluarBtn" mnemonicParsing="false" onAction="#logout" prefHeight="100.0" prefWidth="320.0" styleClass="btnKeluar" stylesheets="@../css/style.css" text="KELUAR">
                <font>
                   <Font size="24.0" />
                </font>
@@ -107,7 +107,7 @@
                         <Font size="16.0" />
                      </font>
                   </MenuButton>
-                  <Button fx:id="BarangCrudBtn" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToBarangCrud" prefHeight="38.0" prefWidth="94.0" text="TAMBAH" textAlignment="CENTER">
+                  <Button fx:id="BarangCrudBtn" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToBarangCrud" prefHeight="38.0" prefWidth="94.0" styleClass="btnTambah" stylesheets="@../css/style.css" text="TAMBAH" textAlignment="CENTER">
                      <HBox.margin>
                         <Insets left="570.0" />
                      </HBox.margin>

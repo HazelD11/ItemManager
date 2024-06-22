@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+
 public class Index extends Application{
     private Stage primaryStage;
 

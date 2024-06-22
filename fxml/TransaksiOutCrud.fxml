@@ -28,7 +28,7 @@
     <RowConstraints maxHeight="687.1999938964843" minHeight="522.4000099182128" prefHeight="559.5999946594238" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="57.0" prefWidth="320.0" text="ITEM MANAGER" textAlignment="CENTER">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="57.0" prefWidth="320.0" styleClass="font" stylesheets="@../css/style.css" text="ITEM MANAGER" textAlignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
@@ -36,7 +36,7 @@
             <Insets />
          </GridPane.margin>
       </Label>
-      <Label fx:id="identitas" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="54.0" prefWidth="853.0" text="Hello, Admin" textAlignment="CENTER" GridPane.columnIndex="1">
+      <Label fx:id="identitas" alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="54.0" prefWidth="853.0" styleClass="font" stylesheets="@../css/style.css" text="Hello, Admin" textAlignment="CENTER" GridPane.columnIndex="1">
          <font>
             <Font size="24.0" />
          </font>
@@ -56,7 +56,7 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="TransaksiOutBtn" mnemonicParsing="false" onAction="#switchToTransaksiOut" prefHeight="100.0" prefWidth="320.0" text="data transaksi keluar" textFill="#006fff">
+            <Button fx:id="TransaksiOutBtn" mnemonicParsing="false" onAction="#switchToTransaksiOut" prefHeight="100.0" prefWidth="320.0" styleClass="btnPilih" stylesheets="@../css/style.css" text="data transaksi keluar" textFill="#006fff">
                <font>
                   <Font size="24.0" />
                </font>
@@ -86,7 +86,7 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="KeluarBtn" mnemonicParsing="false" onAction="#logout" prefHeight="100.0" prefWidth="320.0" text="KELUAR">
+            <Button fx:id="KeluarBtn" mnemonicParsing="false" onAction="#logout" prefHeight="100.0" prefWidth="320.0" styleClass="btnKeluar" stylesheets="@../css/style.css" text="KELUAR">
                <font>
                   <Font size="24.0" />
                </font>
@@ -144,7 +144,7 @@
                                     <Insets left="10.0" />
                                  </HBox.margin>
                               </TextField>
-                              <Button fx:id="TambahBarang" mnemonicParsing="false" onAction="#tambahBarang" prefHeight="26.0" prefWidth="130.0" text="Tambah">
+                              <Button fx:id="TambahBarang" mnemonicParsing="false" onAction="#tambahBarang" prefHeight="26.0" prefWidth="130.0" styleClass="btnTambah" stylesheets="@../css/style.css" text="Tambah">
                                  <HBox.margin>
                                     <Insets left="20.0" />
                                  </HBox.margin>
@@ -161,7 +161,7 @@
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
                         </TableView>
-                        <Button fx:id="TambahTransaksiOut" lineSpacing="20.0" mnemonicParsing="false" onAction="#createTransaksiOut" prefHeight="57.0" prefWidth="140.0" text="TAMBAH" />
+                        <Button fx:id="TambahTransaksiOut" lineSpacing="20.0" mnemonicParsing="false" onAction="#createTransaksiOut" prefHeight="57.0" prefWidth="140.0" styleClass="btnTambah" stylesheets="@../css/style.css" text="TAMBAH" />
                      </children>
                      <opaqueInsets>
                         <Insets right="10.0" />
@@ -174,6 +174,6 @@
             <Insets left="20.0" />
          </padding>
       </ScrollPane>
-      <Button fx:id="KembaliBtn" lineSpacing="20.0" mnemonicParsing="false" onAction="#switchToTransaksiOut" prefHeight="34.0" prefWidth="119.0" text="KEMBALI" GridPane.columnIndex="1" />
+      <Button fx:id="KembaliBtn" lineSpacing="20.0" mnemonicParsing="false" onAction="#switchToTransaksiOut" prefHeight="34.0" prefWidth="119.0" styleClass="btnKeluar" stylesheets="@../css/style.css" text="KEMBALI" GridPane.columnIndex="1" />
    </children>
 </GridPane>

@@ -22,7 +22,7 @@
       <RowConstraints maxHeight="687.1999938964843" minHeight="509.60000305175777" prefHeight="509.60000305175777" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" prefWidth="318.0" text="ITEM MANAGER" textAlignment="CENTER">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="56.0" prefWidth="318.0" styleClass="font" stylesheets="@../css/style.css" text="ITEM MANAGER" textAlignment="CENTER">
          <font>
             <Font size="24.0" />
          </font>
@@ -30,7 +30,7 @@
             <Insets />
          </GridPane.margin>
       </Label>
-      <Label fx:id="identitas" alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="54.0" prefWidth="811.0" text="Hello, Admin" textAlignment="CENTER" GridPane.columnIndex="1">
+      <Label fx:id="identitas" alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="54.0" prefWidth="811.0" styleClass="font" stylesheets="@../css/style.css" text="Hello, Admin" textAlignment="CENTER" GridPane.columnIndex="1">
          <font>
             <Font size="24.0" />
          </font>
@@ -65,7 +65,7 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="PemasokBtn" mnemonicParsing="false" onAction="#switchToPemasok" prefHeight="100.0" prefWidth="320.0" text="data pemasok" textFill="#006fff">
+            <Button fx:id="PemasokBtn" mnemonicParsing="false" onAction="#switchToPemasok" prefHeight="100.0" prefWidth="320.0" styleClass="btnPilih" stylesheets="@../css/style.css" text="data pemasok" textFill="#006fff">
                <font>
                   <Font size="24.0" />
                </font>
@@ -80,7 +80,7 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="KeluarBtn" mnemonicParsing="false" onAction="#logout" prefHeight="100.0" prefWidth="320.0" text="KELUAR">
+            <Button fx:id="KeluarBtn" mnemonicParsing="false" onAction="#logout" prefHeight="100.0" prefWidth="320.0" styleClass="btnKeluar" stylesheets="@../css/style.css" text="KELUAR">
                <font>
                   <Font size="24.0" />
                </font>
@@ -94,7 +94,7 @@
          <children>
             <HBox prefHeight="61.0" prefWidth="771.0">
                <children>
-                  <Button fx:id="PemasokCrudBtn" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToPemasokCrud" prefHeight="38.0" prefWidth="94.0" text="TAMBAH" textAlignment="CENTER">
+                  <Button fx:id="PemasokCrudBtn" contentDisplay="CENTER" mnemonicParsing="false" onAction="#switchToPemasokCrud" prefHeight="38.0" prefWidth="94.0" styleClass="btnTambah" stylesheets="@../css/style.css" text="TAMBAH" textAlignment="CENTER">
                      <HBox.margin>
                         <Insets left="650.0" />
                      </HBox.margin>

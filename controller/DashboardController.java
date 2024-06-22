@@ -204,6 +204,7 @@ public class DashboardController {
                             setGraphic(pesanButton);
                             setText(null);
 
+
                             pesanButton.setOnAction(event -> {
                                 try {
                                     FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/PesananCrud.fxml"));
@@ -215,6 +216,7 @@ public class DashboardController {
                                     e.printStackTrace();
                                 }                            
                             });
+                            
                         }
                     }
                 };

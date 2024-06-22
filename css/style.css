@@ -1,0 +1,32 @@
+.button {
+  -fx-background-color: #e0f4ff;
+  -fx-background-radius: 8px;
+}
+
+.button:pressed {
+  -fx-background-color: #289ad8;
+}
+
+.btnPilih {
+  -fx-background-color: white;
+  -fx-font-weight: bold;
+  -fx-font-size: 24px; /* Tambahkan ukuran font */
+}
+
+.btnKeluar {
+  -fx-background-color: #ff6969;
+  -fx-text-fill: #ffffff;
+  -fx-background-radius: 10px;
+}
+
+.btnTambah {
+  -fx-background-color: #e0f4ff;
+}
+
+.utama {
+  -fx-background-color: white;
+}
+
+.font {
+  -fx-font-weight: bold;
+}

@@ -17,6 +17,8 @@ import data.SharedData;
 
 import java.io.IOException;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.ZoneId;
 
 public class PesananCrudController {
 
@@ -67,6 +69,10 @@ public class PesananCrudController {
         String currentNickname = SharedData.getInstance().getNickname();
         identitas.setText("Hello, " + currentNickname);
 
+        // Set default value for tanggal DatePicker to today's date in GMT+7 timezone
+        LocalDate today = LocalDate.now(ZoneId.of("GMT+7"));
+        tanggal.setValue(today);
+        
         // Populate ComboBoxes
         ObservableList<Barang> barangList = Barang.getBarangsFromDatabase();
         ObservableList<Pemasok> pemasokList = Pemasok.getPemasoksFromDatabase();
